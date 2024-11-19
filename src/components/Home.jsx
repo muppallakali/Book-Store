@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { MdInfo } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
+import { API_URL } from "./Api"
 
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
     async function handledata() {
         try {
             setLoading(true)
-            let res = await fetch("http://localhost:4000/book/getAllBooks")
+            let res = await fetch(`${API_URL}/book/getAllBooks`)
             if (!res.ok) { throw new Error(res.status) }
             let data = await res.json()
             setBookdata(data.allBooks)

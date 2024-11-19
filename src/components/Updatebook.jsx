@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Backbutton from './Backbutton'
 import { useNavigate, useParams } from 'react-router-dom'
-import {useSnackbar} from "notistack"
+import { useSnackbar } from "notistack"
 import Loading from './Loading'
+import { API_URL } from "./Api"
 
 export default function Updatebook() {
     let [loading, setLoading] = useState(false)
@@ -10,13 +11,13 @@ export default function Updatebook() {
     let [book_author, setbookAuthor] = useState("")
     let [publish_year, setbookPublished] = useState()
     let { id } = useParams()
-    let navigate=useNavigate()
-    let{enqueueSnackbar}=useSnackbar()
+    let navigate = useNavigate()
+    let { enqueueSnackbar } = useSnackbar()
     useEffect(() => {
         const getdata = async () => {
             try {
                 setLoading(true)
-                let res = await fetch(`http://localhost:4000/book/getsinglebook/${id}`);
+                let res = await fetch(`${API_URL}/book/getsinglebook/${id}`);
                 let data = await res.json();
                 setbookname(data.singlebook.book_Name);
                 setbookAuthor(data.singlebook.book_author);
@@ -24,7 +25,7 @@ export default function Updatebook() {
             } catch (error) {
                 console.error(error);
             }
-            finally{
+            finally {
                 setLoading(false)
             }
         };
@@ -35,9 +36,9 @@ export default function Updatebook() {
     let handlesubmit = async (e) => {
         e.preventDefault()
         // setLoading(true)
-        try {          
+        try {
             setLoading(true)
-            let res = await fetch(`http://localhost:4000/book/updatebook/${id}`, {
+            let res = await fetch(`${API_URL}/book/updatebook/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ book_Name, book_author, publish_year })
@@ -50,13 +51,13 @@ export default function Updatebook() {
             setbookPublished(0)
             setbookname("")
             navigate("/")
-            enqueueSnackbar("Book Updated",{variant:"success"})
+            enqueueSnackbar("Book Updated", { variant: "success" })
         }
         catch (error) {
             console.log(error)
-            enqueueSnackbar("something went wrong",{variant:"error"})
+            enqueueSnackbar("something went wrong", { variant: "error" })
         }
-        finally{
+        finally {
             setLoading(false)
         }
 

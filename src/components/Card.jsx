@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Backbutton from './Backbutton'
+import { API_URL } from "./Api"
 import { Link, useNavigate } from 'react-router-dom'
 import { MdDelete } from "react-icons/md";
 import { MdInfo } from "react-icons/md";
@@ -9,12 +10,12 @@ export default function Card() {
     let [bookdata, setBookdata] = useState([])
     let [loading, setLoading] = useState(false)
     let [tableview, setTableview] = useState(false)
-    let navigate=useNavigate()
-    tableview?navigate("/"):""
+    let navigate = useNavigate()
+    tableview ? navigate("/") : ""
     async function handledata() {
         try {
             setLoading(true)
-            let res = await fetch("http://localhost:4000/book/getAllBooks")
+            let res = await fetch(`${API_URL}/book/getAllBooks`)
             if (!res.ok) { throw new Error(res.status) }
             let data = await res.json()
             setBookdata(data.allBooks)
@@ -48,7 +49,7 @@ export default function Card() {
                 <div className="flex justify-start items-start mb-10"><Backbutton />
                 </div>
                 <div className="grid grid-cols-1  md:grid-cols-3 gap-10">
-                    {bookdata.map((x,i) => (
+                    {bookdata.map((x, i) => (
                         <div className='flex flex-col border-2 border-black rounded-xl  p-4' key={i}>
                             <div className='my-4 flex flex-wrap'>
                                 <span className='text-xl mr-4  text-gray-500'>Book Name:</span>
