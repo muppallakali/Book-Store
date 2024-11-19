@@ -5,7 +5,7 @@ import Deletebook from './components/Deletebook'
 import CreateBook from './components/CreateBook'
 import Updatebook from './components/Updatebook'
 import ShowBook from './components/ShowBook'
-import Card from './components/card'
+import Card from './components/Cards'
 
 export default function App() {
   return (
